@@ -11,14 +11,16 @@ const ChatInput = ({ value, onChange, handleSend }: ChatInputProps) => {
 
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
+    const isMobile = typeof window !== "undefined" && /Mobi|Android/i.test(navigator.userAgent);
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (isMobile) return;
+
+        /// desktop only
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             handleSend();
-
-            setTimeout(() => {
-                inputRef.current?.focus();
-            }, 0);
+            setTimeout(() => inputRef.current?.focus(), 0);
         }
     };
 
@@ -40,9 +42,8 @@ const ChatInput = ({ value, onChange, handleSend }: ChatInputProps) => {
                     placeholder="Type your message..."
                     rows={1}
                     className="w-full text-sm lg:text-base border border-zinc-600/80 py-2 px-2
-                     bg-zinc-950 outline-none ring-0 focus:ring-0 resize-none overflow-hidden 
-                     min-h-11 lg:min-h-14 max-h-11 lg:max-h-14 
-                     overflow-y-scroll no-scrollbar" 
+                     bg-zinc-950 outline-none ring-0 focus:ring-0 resize-none 
+                     overflow-y-auto no-scrollbar min-h-11 lg:min-h-14 max-h-40"
                     onInput={(e) => {
                         const el = e.currentTarget;
                         el.style.height = "auto";
