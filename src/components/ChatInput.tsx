@@ -43,7 +43,7 @@ const ChatInput = ({ value, onChange, handleSend }: ChatInputProps) => {
                     rows={1}
                     className="w-full text-sm lg:text-base border border-zinc-600/80 py-2 px-2
                      bg-zinc-950 outline-none ring-0 focus:ring-0 resize-none 
-                     overflow-y-auto no-scrollbar min-h-11 lg:min-h-14 max-h-40"
+                     overflow-y-auto no-scrollbar min-h-11 lg:min-h-14 max-h-11 lg:max-h-14"
                     onInput={(e) => {
                         const el = e.currentTarget;
                         el.style.height = "auto";
