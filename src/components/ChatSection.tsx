@@ -18,8 +18,11 @@ const ChatSection = ({ chats }: { chats: string[] }) => {
             {chats.map((msg, index) => (
                 <div
                     key={index}
-                    className="rounded-lg rounded-tl-none odd:rounded-tr-none bg-zinc-800 px-3 py-2 
-                    w-fit max-w-2/3 lg:max-w-[40%] flex odd:self-end flex-col text-sm lg:text-base"
+                    className="
+                        rounded-lg rounded-tl-none odd:rounded-tr-none bg-zinc-800 px-3 py-2 
+                        w-fit max-w-[70%] lg:max-w-[50%] flex odd:self-end flex-col 
+                        text-sm lg:text-base wrap-break-word
+                    "
                 >
                     <h1 className="text-white">{msg}</h1>
                     <p className="mt-0.5 text-xs lg:text-sm text-zinc-400 self-end">
