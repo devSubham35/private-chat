@@ -10,23 +10,30 @@ interface ChatInputProps {
 const ChatInput = ({ value, onChange, handleSend }: ChatInputProps) => {
 
     const inputRef = useRef<HTMLTextAreaElement>(null);
-
-    const isMobile = typeof window !== "undefined" && /Mobi|Android/i.test(navigator.userAgent);
+    const isMobile =
+        typeof window !== "undefined" &&
+        /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        /// mobile → allow normal enter
         if (isMobile) return;
 
-        /// desktop only
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             handleSend();
+
+            /// desktop → keep refocus
             setTimeout(() => inputRef.current?.focus(), 0);
         }
     };
 
     const handleClickSend = () => {
         handleSend();
-        setTimeout(() => inputRef.current?.focus(), 0);
+
+        /// desktop only
+        if (!isMobile) {
+            setTimeout(() => inputRef.current?.focus(), 0);
+        }
     };
 
     return (
@@ -35,7 +42,7 @@ const ChatInput = ({ value, onChange, handleSend }: ChatInputProps) => {
 
                 <textarea
                     ref={inputRef}
-                    autoFocus
+                    autoFocus={!isMobile}   // prevent keyboard auto-open on load
                     value={value}
                     onChange={onChange}
                     onKeyDown={handleKeyDown}
@@ -43,7 +50,7 @@ const ChatInput = ({ value, onChange, handleSend }: ChatInputProps) => {
                     rows={1}
                     className="w-full text-sm lg:text-base border border-zinc-600/80 py-2 px-2
                      bg-zinc-950 outline-none ring-0 focus:ring-0 resize-none 
-                     overflow-y-auto no-scrollbar min-h-11 lg:min-h-14 max-h-11 lg:max-h-14"
+                     overflow-y-auto no-scrollbar min-h-12 lg:min-h-14 max-h-12 lg:max-h-14"
                     onInput={(e) => {
                         const el = e.currentTarget;
                         el.style.height = "auto";
@@ -54,7 +61,7 @@ const ChatInput = ({ value, onChange, handleSend }: ChatInputProps) => {
                 <button
                     onClick={handleClickSend}
                     className="px-4 lg:px-10 py-1.5 bg-zinc-500/50 hover:bg-zinc-500/40 font-semibold 
-                    cursor-pointer active:scale-95 transition-transform text-sm lg:text-base h-11 lg:h-14"
+                    cursor-pointer active:scale-95 transition-transform text-sm lg:text-base h-12 lg:h-14"
                 >
                     SEND
                 </button>
