@@ -3,9 +3,13 @@ import { useEffect, useRef } from 'react'
 const ChatSection = ({ chats }: { chats: string[] }) => {
 
     const chatEndRef = useRef<HTMLDivElement | null>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
 
     const scrollToBottom = () => {
-        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        /// Use scrollTo instead of scrollIntoView to avoid focus issues
+        if (containerRef.current) {
+            containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        }
     };
 
     useEffect(() => {
@@ -14,7 +18,10 @@ const ChatSection = ({ chats }: { chats: string[] }) => {
 
 
     return (
-        <div className="w-[90%] xl:w-1/2 h-full flex flex-col gap-3 py-1 lg:py-5 overflow-y-scroll scrollbar-hide pt-3 lg:pt-5 no-scrollbar">
+        <div 
+            ref={containerRef}
+            className="w-[90%] xl:w-1/2 h-full flex flex-col gap-3 py-1 lg:py-5 overflow-y-scroll scrollbar-hide pt-3 lg:pt-5 no-scrollbar"
+        >
             {chats.map((msg, index) => (
                 <div
                     key={index}

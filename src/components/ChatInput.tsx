@@ -11,8 +11,7 @@ const ChatInput = ({ value, onChange, handleSend }: ChatInputProps) => {
 
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const isMobile =
-        typeof window !== "undefined" &&
-        /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+        typeof window !== "undefined" && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         /// mobile → allow normal enter
@@ -28,9 +27,14 @@ const ChatInput = ({ value, onChange, handleSend }: ChatInputProps) => {
     };
 
     const handleClickSend = () => {
+        // Don't blur on mobile to keep keyboard open
+        if (isMobile) {
+            inputRef.current?.focus();
+        }
+        
         handleSend();
 
-        /// desktop only
+        /// desktop only refocus after send
         if (!isMobile) {
             setTimeout(() => inputRef.current?.focus(), 0);
         }
@@ -42,7 +46,7 @@ const ChatInput = ({ value, onChange, handleSend }: ChatInputProps) => {
 
                 <textarea
                     ref={inputRef}
-                    autoFocus={!isMobile}   // prevent keyboard auto-open on load
+                    autoFocus={!isMobile}
                     value={value}
                     onChange={onChange}
                     onKeyDown={handleKeyDown}
@@ -60,6 +64,13 @@ const ChatInput = ({ value, onChange, handleSend }: ChatInputProps) => {
 
                 <button
                     onClick={handleClickSend}
+                    onTouchStart={(e) => {
+                        /// Prevent default touch behavior that might blur the input
+                        if (isMobile) {
+                            e.preventDefault();
+                            handleClickSend();
+                        }
+                    }}
                     className="px-4 lg:px-10 py-1.5 bg-zinc-500/50 hover:bg-zinc-500/40 font-semibold 
                     cursor-pointer active:scale-95 transition-transform text-sm lg:text-base h-12 lg:h-14"
                 >
