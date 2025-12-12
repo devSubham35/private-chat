@@ -1,0 +1,1 @@
+#yarn add elysia @elysiajs/eden @sinclair/typebox file-type
