@@ -2,6 +2,7 @@ import { ApiError } from "@/lib/ApiError";
 import { Elysia, NotFoundError } from "elysia";
 import { ApiResponse } from "@/lib/ApiResponse";
 import { userModule } from "./modules/user/user.route";
+import { room } from "./modules/room";
 
 export const app = new Elysia({ prefix: "/api" })
 
@@ -22,4 +23,5 @@ export const app = new Elysia({ prefix: "/api" })
 
 
     // Modules
-    .use(userModule);
+    .use(userModule)
+    .use(room);

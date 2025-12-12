@@ -13,13 +13,14 @@
   "dependencies": {
     "@elysiajs/eden": "^1.4.5",
     "@prisma/adapter-pg": "^7.1.0",
-    "prisma": "7",
     "@prisma/client": "7",
     "@sinclair/typebox": "^0.34.41",
     "@tanstack/react-query": "^5.90.12",
     "elysia": "^1.4.18",
     "file-type": "^21.1.1",
+    "nanoid": "^5.1.6",
     "next": "16.0.8",
+    "prisma": "7",
     "react": "19.2.1",
     "react-dom": "19.2.1"
   },

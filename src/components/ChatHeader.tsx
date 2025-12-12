@@ -1,13 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import useRoom from "@/hook/useRoom";
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 
 const ChatHeader = () => {
 
     const router = useRouter();
-    const roomId = "ggeoi64598464gnrekhn454";
-    const [copyText, setCopyText] = useState("COPY");
+    const { roomId: room_id } = useParams();
+    const { handleDestroyRoom, isDestroyRoomPending } = useRoom();
+    const expiredAt = localStorage.getItem("expiredAt")
+
+    const [roomId, setRoomId] = useState<string>("");
+    const [copyText, setCopyText] = useState<string>("COPY");
 
     const handleCopy = async () => {
         try {
@@ -18,6 +23,48 @@ const ChatHeader = () => {
             console.error("Clipboard error:", err);
         }
     };
+
+    useEffect(() => {
+        if (room_id) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setRoomId(String(room_id));
+        }
+    }, [room_id]);
+
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+
+    const [timeLeft, setTimeLeft] = useState<string>("");
+
+    useEffect(() => {
+        if (!expiredAt) return;
+
+        const expiry = new Date(expiredAt).getTime();
+
+        const interval = setInterval(() => {
+            const now = Date.now();
+            const diff = expiry - now;
+
+            if (diff <= 0) {
+                setTimeLeft("00:00");
+                clearInterval(interval);
+
+                // Redirect to home after time is up
+                router.push("/");
+                return;
+            }
+
+            const minutes = Math.floor(diff / 1000 / 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            setTimeLeft(
+                `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`
+            );
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [expiredAt, router]);
+
 
     return (
         <div className="
@@ -54,21 +101,18 @@ const ChatHeader = () => {
                 <div>
                     <h4 className="text-zinc-500 text-sm sm:text-base">Self_Destruct</h4>
                     <h4 className="text-yellow-500 text-[14px] sm:text-[16px]">
-                        09:25
+                        {timeLeft}
                     </h4>
                 </div>
 
                 {/* DESTROY BUTTON */}
                 <button
-                    onClick={() => router.push("/")}
-                    className="
-                w-fit sm:w-auto
-                px-4 py-2.5 bg-zinc-800 rounded-lg 
-                text-sm hover:bg-zinc-800/80 cursor-pointer 
-                active:scale-95 transition-transform whitespace-nowrap
-                "
+                    disabled={isDestroyRoomPending}
+                    onClick={() => handleDestroyRoom(roomId)}
+                    className="w-fit sm:w-auto px-4 py-2.5 bg-zinc-800 rounded-lg 
+                text-sm hover:bg-zinc-800/80 cursor-pointer active:scale-95 transition-transform whitespace-nowrap disabled:bg-white/20"
                 >
-                    💣 DESTROY NOW
+                    {`💣 DESTROY NOW ${isDestroyRoomPending ? "..." : ""}`}
                 </button>
             </div>
         </div>
