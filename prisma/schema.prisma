@@ -12,3 +12,9 @@ model User {
   name String?
   email String @unique
 }
+
+model Room {
+  id String @id @default(cuid()) @unique
+  expiredAt String
+  connected String[]
+}
