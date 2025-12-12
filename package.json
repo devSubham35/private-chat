@@ -4,13 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    
+    "build": "prisma generate && next build",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@elysiajs/eden": "^1.4.5",
     "@prisma/adapter-pg": "^7.1.0",
+    "prisma": "7",
     "@prisma/client": "7",
     "@sinclair/typebox": "^0.34.41",
     "@tanstack/react-query": "^5.90.12",
@@ -28,7 +31,6 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.8",
-    "prisma": "7",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
