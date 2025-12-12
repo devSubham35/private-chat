@@ -1,10 +1,18 @@
+import { room } from "./modules/room";
+import { cors } from '@elysiajs/cors';
 import { ApiError } from "@/lib/ApiError";
 import { Elysia, NotFoundError } from "elysia";
 import { ApiResponse } from "@/lib/ApiResponse";
 import { userModule } from "./modules/user/user.route";
-import { room } from "./modules/room";
 
 export const app = new Elysia({ prefix: "/api" })
+    
+    .use(cors({
+        origin: true,
+        credentials: true,
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    }))
 
     /// Global Error Handler
     .onError(({ error, set }) => {
@@ -21,7 +29,6 @@ export const app = new Elysia({ prefix: "/api" })
         return ApiResponse(500, "Internal Server Error");
     })
 
-
-    // Modules
+    /// Modules - These come AFTER CORS
     .use(userModule)
-    .use(room);
+    .use(room)

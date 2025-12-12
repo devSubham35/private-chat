@@ -193,6 +193,11 @@
   resolved "https://registry.yarnpkg.com/@electric-sql/pglite/-/pglite-0.3.2.tgz#1962142ac261aab3c9d54b95c1fe1edc492d6fa0"
   integrity sha512-zfWWa+V2ViDCY/cmUfRqeWY1yLto+EpxjXnZzenB1TyxsTiXaTWeZFIZw6mac52BsuQm0RjCnisjBtdBaXOI6w==
 
+"@elysiajs/cors@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@elysiajs/cors/-/cors-1.4.0.tgz#9fc415ccbf488beb39a9a0c9990fbd1c6c74c506"
+  integrity sha512-pb0SCzBfFbFSYA/U40HHO7R+YrcXBJXOWgL20eSViK33ol1e20ru2/KUaZYo5IMUn63yaTJI/bQERuQ+77ND8g==
+
 "@elysiajs/eden@^1.4.5":
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/@elysiajs/eden/-/eden-1.4.5.tgz#9a1c49a90760dfe4a3cf9e5778c7353039ab413c"

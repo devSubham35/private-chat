@@ -6,11 +6,11 @@
     "dev": "next dev",
     "start": "next start",
     "lint": "eslint",
-    
     "build": "prisma generate && next build",
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@elysiajs/cors": "^1.4.0",
     "@elysiajs/eden": "^1.4.5",
     "@prisma/adapter-pg": "^7.1.0",
     "@prisma/client": "7",
