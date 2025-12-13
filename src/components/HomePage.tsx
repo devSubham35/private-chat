@@ -28,7 +28,7 @@ const HomePage = () => {
 
 
     return (
-        <div className="w-full min-h-screen flex flex-col justify-center items-center gap-8 p-4 lg:p-0">
+        <div className="w-full min-h-screen flex flex-col justify-center items-center gap-8 p-4 lg:p-0 relative">
 
             <div className="text-center">
                 <h1 className="text-green-500 text-[18px] lg:text-xl mb-1">&gt;private_chat</h1>
@@ -56,7 +56,7 @@ const HomePage = () => {
                     <div className="w-1/2 h-0.5 border-b border-zinc-700"></div>
                 </div>
 
-                <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-2">
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-2 tex-[#9f071138]">
                     <input
                         disabled
                         value=""
@@ -71,7 +71,18 @@ const HomePage = () => {
                     </button>
                 </div>
             </div>
-        </div>
+
+            {/* Azure Depths */}
+            <div
+                className="absolute inset-0 -z-10"
+                style={{
+                    background: "radial-gradient(125% 125% at 50% 100%, #000000 40%, #0d1a36 100%)",
+                }}
+            />
+
+
+
+        </div >
     )
 }
 

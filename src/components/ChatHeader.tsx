@@ -16,7 +16,7 @@ const ChatHeader = () => {
 
     const handleCopy = async () => {
         try {
-            await navigator.clipboard.writeText(roomId);
+            await navigator.clipboard.writeText(`http://localhost:3000/chat-room/${roomId}`);
             setCopyText("COPIED!");
             setTimeout(() => setCopyText("COPY"), 1500);
         } catch (err) {
@@ -109,7 +109,7 @@ const ChatHeader = () => {
                 <button
                     disabled={isDestroyRoomPending}
                     onClick={() => handleDestroyRoom(roomId)}
-                    className="w-fit sm:w-auto px-4 py-2.5 bg-zinc-800 rounded-lg 
+                    className="w-fit sm:w-auto px-4 py-2.5 bg-zinc-800 rounded-lg text-red-500
                 text-sm hover:bg-zinc-800/80 cursor-pointer active:scale-95 transition-transform whitespace-nowrap disabled:bg-white/20"
                 >
                     {`💣 DESTROY NOW ${isDestroyRoomPending ? "..." : ""}`}

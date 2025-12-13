@@ -4,17 +4,22 @@ import { ApiError } from "@/lib/ApiError";
 import { ApiResponse } from "@/lib/ApiResponse";
 
 export const room = new Elysia({ prefix: "/room" })
+
+    ///////////////////////////////////
+    /// Create Room
+    ///////////////////////////////////
+
     .post('/create/:userId',
         async ({ params: { userId } }) => {
 
             if (!userId) throw new ApiError("User id is required!", 400);
 
-            const expiresAt = new Date(Date.now() + 30 * 1000);
+            const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
             /// Create secure room
             const room = await prisma.room.create({
                 data: {
-                    connected: [String(userId)],
+                    connected: [],
                     expiredAt: String(expiresAt)
                 }
             });
@@ -26,7 +31,7 @@ export const room = new Elysia({ prefix: "/room" })
                 await prisma.room.delete({
                     where: { id: room?.id }
                 })
-            }, 20000);
+            }, 10 * 60 * 1000);
 
             return ApiResponse(200, "Room created Succesfully!", room);
         }
@@ -72,6 +77,11 @@ export const room = new Elysia({ prefix: "/room" })
             })
         }
     )
+
+    ///////////////////////////////////
+    /// Destroy Room
+    ///////////////////////////////////
+
     .delete('/destroy-room/:id',
         async ({ params: { id: roomId } }) => {
 
