@@ -18,7 +18,7 @@ const ChatUI = () => {
     };
 
     return (
-        <div className="w-full h-screen relative">
+        <div className="w-full h-screen relative z-50">
 
             {/* HEADER */}
             <ChatHeader />
@@ -34,6 +34,27 @@ const ChatUI = () => {
                 handleSend={handleSend}
                 onChange={(e) => setValue(e.target.value)}
             />
+
+
+            <>
+                <div
+                    className="absolute inset-0 -z-10"
+                    style={{
+                        background:
+                            "repeating-linear-gradient(45deg, #000 0px, #111 2px, #000 4px, #222 6px)",
+                    }}
+                />
+
+                <div
+                    className="absolute inset-0 -z-10 pointer-events-none"
+                    style={{
+                        background: "rgba(255, 255, 255, 0.02)",
+                        backdropFilter: "blur(45px) grayscale(20%)",
+                        WebkitBackdropFilter: "blur(45px) grayscale(20%)",
+                    }}
+                />
+            </>
+
         </div>
     );
 };
